@@ -7,6 +7,7 @@ This python code implements the core concepts of a blockchain, while featuring c
 It runs as a Command-Line Interface (CLI), allowing users to simulate blockchain operations locally, including creating wallets, sending transactions, and mining new blocks.
 
 ✨ Features ✨
+
 Cryptographic Wallets: Securely generates public/private key pairs using the ecdsa library
 
 Transactions & Signatures: Transactions are cryptographically signed by the sender's private key to ensure authenticity
@@ -25,18 +26,17 @@ Simple CLI: An interactive command-line interface, which makes it easy to experi
 This project requires Python 3.6 or higher & the only external dependency is the ecdsa library
 
 🚀 Installation & Setup
-Clone the repository:
 
+Clone the repository:
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
 
 Install dependencies:
-
 pip install ecdsa
 
 💻 Usage
-Run the script directly from your terminal:
 
+Run the script directly from your terminal:
 python blockchain_cli.py
 
 You will be presented with an interactive menu to perform various actions:
@@ -54,6 +54,7 @@ Enter your choice:
 "
 
 🧑‍💻 Code Structure
+
 Wallet: Manages the creation of public/private key pairs and handles transaction signing and verification.
 
 Transaction: Defines the structure of a transaction ( inputs, outputs, and cryptographic signatures).
