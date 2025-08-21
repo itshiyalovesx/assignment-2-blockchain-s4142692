@@ -135,14 +135,14 @@ class Blockchain: #The main blockchain class
         self.chain = []   # The list of blocks that make up the blockchain
         self.block_data_dir = "blockchain_data" # The directory where blocks are saved to disk
         
-        # Create data directory if it doesn't exist
+        # Creates data directory if it doesn't exist
         if not os.path.exists(self.block_data_dir):
             os.makedirs(self.block_data_dir)
 
-        # Load any existing blocks from storage.
+        # Loads any existing blocks from storage.
         self.load_chain()
 
-        # Create the first block (the genesis block) if the chain is empty
+        # Creates the first block (the genesis block) if the chain is empty
         if not self.chain:
             self.create_genesis_block()
 
