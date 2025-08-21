@@ -41,6 +41,7 @@ python blockchain_cli.py
 
 You will be presented with an interactive menu to perform various actions:
 "
+
 --- Blockchain CLI ---
 1. Create New Wallet
 2. Add Transaction
