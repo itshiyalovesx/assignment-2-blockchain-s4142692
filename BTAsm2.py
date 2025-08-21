@@ -6,7 +6,7 @@ import os       # For file and directory management (e.g., creating a directory 
 import glob     # Finds all the file pathnames matching a specified pattern, used here to load all saved block files
 import pickle   # A module for serializing and deserializing Python objects (To save and load entire block objects to and from files)
 from datetime import datetime  
-from uuid import uuid4       # Generates a random, universally unique identifier (UUID) for transactions, ensuring each one has a unique ID.
+from uuid import uuid4       # Generates a random, universally unique identifier (UUID) for transactions, ensuring each one has a unique ID
 
 # --- Third-Party Cryptographic Library ---
 import ecdsa #for the security of digital signatures in transactions
@@ -24,7 +24,7 @@ class Wallet: #Manages public/private key pairs for users
     def sign_transaction(self, transaction_data):  #Signs a transaction with the wallet's private key
         return self.private_key.sign(transaction_data.encode()).hex()
 
-    def verify_signature(self, public_key, signature, transaction_data):#Verifies a transaction's signature using the sender's public key
+    def verify_signature(self, public_key, signature, transaction_data): #Verifies a transaction's signature using the sender's public key
 
         try:
             vk = ecdsa.VerifyingKey.from_string(bytes.fromhex(public_key), curve=ecdsa.SECP256k1)
@@ -49,7 +49,7 @@ class Transaction: #Represents a transaction in the blockchain, uses existing UT
         self.input_utxos = input_utxos or [] 
         # The cryptographic signature of the transaction, created by the sender's private key
         self.signature = None
-        # Timestamp the transaction with the current date and time
+        # Timestamps the transaction with the current date and time
         self.timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def __repr__(self): #Returns a concise, human-readable representation of the transaction
@@ -73,8 +73,7 @@ class Transaction: #Represents a transaction in the blockchain, uses existing UT
         # The data is encoded to bytes before being hashed, as required by the `hashlib` library
         return hashlib.sha256(transaction_data_str.encode()).hexdigest()
 
-class UTXO: #Represents an unspent transaction output A UTXO is a record of value that an address can spend
-            #It's the fundamental unit of value in this blockchain model
+class UTXO: #Represents an unspent transaction output. UTXO is a record of value that an address can spend (fundamental unit of value in this blockchain model)
     
     def __init__(self, tx_id, output_index, amount, recipient_address):
         self.tx_id = tx_id                # The ID of the transaction that created this UTXO
@@ -108,8 +107,8 @@ class Block: # A single block in the blockchain
         self.hash = self.calculate_hash()
 
     def calculate_hash(self): #Calculates block hash using dictionary representation
-        # Creates a dictionary of the block's data.
-        block_dict = {
+        
+        block_dict = {  # Creates a dictionary of the block's data
             'index': self.index,
             'timestamp': self.timestamp,
             'transactions': [tx.to_dict() for tx in self.transactions], # Serializes each transaction within the block
@@ -118,7 +117,7 @@ class Block: # A single block in the blockchain
         }
         # Converts the dictionary to a sorted JSON string for consistent hashing
         block_string = json.dumps(block_dict, sort_keys=True)
-        # Computes the SHA-256 hash.
+        # Computes the SHA-256 hash
         return hashlib.sha256(block_string.encode()).hexdigest()
 
     def __repr__(self):
@@ -139,7 +138,7 @@ class Blockchain: #The main blockchain class
         if not os.path.exists(self.block_data_dir):
             os.makedirs(self.block_data_dir)
 
-        # Loads any existing blocks from storage.
+        # Loads any existing blocks from storage
         self.load_chain()
 
         # Creates the first block (the genesis block) if the chain is empty
@@ -153,7 +152,7 @@ class Blockchain: #The main blockchain class
         self.save_block(genesis_block)
         print("✅ Genesis Block created.")
 
-    def save_block(self, block): #Persists a block to a file
+    def save_block(self, block): #Adds on a block to a file
         # Creates a file path using the block's index
         filepath = os.path.join(self.block_data_dir, f"block_{block.index}.pickle")
         # Uses the pickle library to serialize the block object and save it to the file
@@ -179,7 +178,7 @@ class Blockchain: #The main blockchain class
 
     def add_transaction(self, transaction):  #Adds a new transaction to the pool of pending transactions
 
-        if not self.validate_transaction(transaction):   # First, validate the transaction before adding it
+        if not self.validate_transaction(transaction):   # It first validates the transaction before adding it
             print("❌ Invalid transaction. Rejected.")
             return False
         self.pending_transactions.append(transaction)
